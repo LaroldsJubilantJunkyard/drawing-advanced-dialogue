@@ -167,7 +167,7 @@ void ShiftTextRowsUpward(void){
     set_win_tiles(1,1,INNER_DIALOGUE_BOX_WIDTH,1,copyBuffer);
 }
 
-void DrawTextAdvanced(char* text){
+void DrawAdvancedDialogue(char* text){
 
     uint8_t column=1;
     uint8_t row=1;
@@ -299,7 +299,7 @@ void main(void)
 
         // We'll pass in one long string, but the game will present to the player multiple pages.
         // By passing 3 as the final argument, the game boy will wait 3 frames between each character
-        DrawTextAdvanced("This is an how you draw text on the screen in GBDK. The code will automatically jump to a new line, when it cannot fully draw a word.  When you reach three lines, it will wait until you press A. After that, it will start a new page and continue. The code will also automatically start a new page after periods. For every page, the code will dynamically populate VRAM. Only letters and characters used, will be loaded into VRAM.");
+        DrawAdvancedDialogue("This is an how you draw text on the screen in GBDK. The code will automatically jump to a new line, when it cannot fully draw a word.  When you reach three lines, it will wait until you press A. After that, it will start a new page and continue. The code will also automatically start a new page after periods. For every page, the code will dynamically populate VRAM. Only letters and characters used, will be loaded into VRAM.");
         
     }
 }
