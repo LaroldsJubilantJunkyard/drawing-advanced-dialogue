@@ -18,13 +18,6 @@ uint8_t joypadCurrent=0,joypadPrevious=0;
 uint8_t loadedCharacters[Font_TILE_COUNT];
 uint8_t loadedCharacterCount=0;
 
-void MoveWindow(void){
-
-    int16_t y = windowYPosition>>3;
-
-    move_win(7,y);
-}
-
 
 uint8_t GetTileForCharacter(char character){
     
@@ -98,33 +91,36 @@ void WaitForAButton(void){
 }
 
 void DrawDialogueBoxOnWin(void){
-
     
     set_win_based_tiles(0,0,20,5,DialogueBox_map,1);
 }
 
 void SlideDialogueBoxOnScreen(void){
 
-    DrawDialogueBoxOnWin();
-
+    // The top of the dialogue box should be 5 tiles (the size of our dialogue box) from the bottom of the screen
     int16_t desiredWindowPosition = (DEVICE_SCREEN_HEIGHT<<3)-(DIALOG_BOX_HEIGHT*8);
 
     while((windowYPosition>>3)>desiredWindowPosition){
 
         windowYPosition-=10;
-        MoveWindow();
+
+        // Update our window position
+        move_win(7,windowYPosition>>3);
         vsync();
     }
 }
 
 void SlideDialogueBoxOffScreen(void){
 
+    // The top of the dialogue will be be the bottom of the screen, and thus off-screen
     int16_t desiredWindowPosition = (DEVICE_SCREEN_HEIGHT<<3);
 
     while((windowYPosition>>3)<desiredWindowPosition){
 
         windowYPosition+=10;
-        MoveWindow();
+
+        // Update our window position
+        move_win(7,windowYPosition>>3);
         vsync();
     }
 }
@@ -176,6 +172,8 @@ void DrawTextAdvanced(char* text){
     uint8_t column=1;
     uint8_t row=1;
         
+
+    DrawDialogueBoxOnWin();
     SlideDialogueBoxOnScreen();
     ResetLoadedCharacters();
 
@@ -295,7 +293,7 @@ void main(void)
 
     // Completely hide the window
     windowYPosition = (DEVICE_SCREEN_HEIGHT << 3)<<3;
-    MoveWindow();
+    move_win(7,windowYPosition>>3);
     
     while(TRUE){
 
